@@ -3,7 +3,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 
 const maxComments = 5;
 
-let dbPromise = Promise.reject(new Error('Database is not open'));
+let dbPromise;
 let dbOpen = false;
 
 export async function openDatabase({ dbFile }) {
@@ -37,7 +37,7 @@ function createBlankDatabase() {
 }
 
 export async function createComment({ name, text }) {
-  const db = await dbPromise;
+  const db = await loadDatabase();
 
   const comment = { name, text, date: DateTime.now() };
   db.data.comments.push(serializeComment(comment));
@@ -51,7 +51,7 @@ export async function createComment({ name, text }) {
 }
 
 export async function getComments() {
-  const db = await dbPromise;
+  const db = await loadDatabase();
   return db.data.comments.map(comment => deserializeComment(comment));
 }
 
@@ -70,6 +70,14 @@ function serializeComment({ date, ...rest }) {
 }
 
 async function saveDatabase() {
-  const db = await dbPromise;
+  const db = await loadDatabase();
   await writeFile(db.file, JSON.stringify(db.data), 'utf8');
+}
+
+function loadDatabase() {
+  if (dbPromise === undefined) {
+    throw new Error('Database is not open');
+  }
+
+  return dbPromise;
 }
