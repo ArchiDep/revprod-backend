@@ -4,8 +4,8 @@ Backend for The Revolutionary Product, a multi-component web application to
 illustrate [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 and [reverse proxying](https://en.wikipedia.org/wiki/Reverse_proxy).
 
-[![build](https://github.com/MediaComem/revprod-backend/actions/workflows/build.yml/badge.svg)](https://github.com/MediaComem/revprod-backend/actions/workflows/build.yml)
-[![license](https://img.shields.io/github/license/MediaComem/big-browser)](https://opensource.org/licenses/MIT)
+[![build](https://github.com/ArchiDep/revprod-backend/actions/workflows/build.yml/badge.svg)](https://github.com/ArchiDep/revprod-backend/actions/workflows/build.yml)
+[![license](https://img.shields.io/github/license/ArchiDep/revprod-backend)](https://opensource.org/licenses/MIT)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -25,7 +25,7 @@ and [reverse proxying](https://en.wikipedia.org/wiki/Reverse_proxy).
 
 ```bash
 # Clone and move into the repository
-git clone https://github.com/MediaComem/revprod-backend.git
+git clone https://github.com/ArchiDep/revprod-backend.git
 cd revprod-backend
 
 # Install dependencies
@@ -39,7 +39,7 @@ npm run dev
 
 ```bash
 # Clone and move into the repository
-git clone https://github.com/MediaComem/revprod-backend.git
+git clone https://github.com/ArchiDep/revprod-backend.git
 cd revprod-backend
 
 # Install dependencies

@@ -5,14 +5,14 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/MediaComem/revprod-backend.git"
+    "url": "git+ssh://git@github.com/ArchiDep/revprod-backend.git"
   },
   "author": "Simon Oulevay <contact@alphahydrae.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MediaComem/revprod-backend/issues"
+    "url": "https://github.com/ArchiDep/revprod-backend/issues"
   },
-  "homepage": "https://github.com/MediaComem/revprod-backend#readme",
+  "homepage": "https://github.com/ArchiDep/revprod-backend#readme",
   "type": "module",
   "scripts": {
     "check": "npm run lint && npm run format",
