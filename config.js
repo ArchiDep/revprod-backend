@@ -105,7 +105,7 @@ function parseEnvironmentBoolean(variableName, defaultValue) {
   const value = getEnvironmentString(variableName, defaultValue === undefined);
   if (value === undefined) {
     return defaultValue;
-  } else if (/^(?:1|y|yes|t|true)$/u.text(value)) {
+  } else if (/^(?:1|y|yes|t|true)$/u.test(value)) {
     return true;
   } else if (/^(?:0|n|no|f|false)$/u.test(value)) {
     return false;
