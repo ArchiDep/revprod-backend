@@ -19,7 +19,7 @@ and [reverse proxying](https://en.wikipedia.org/wiki/Reverse_proxy).
 
 ## Requirements
 
-- [Node.js][node] 22.x
+- [Node.js][node] 24.x
 
 ## Development
 
