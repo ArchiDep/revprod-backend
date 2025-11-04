@@ -32,7 +32,7 @@ export const listComments = route(async (req, res) => {
 
   res.send(
     comments
-      .sort(
+      .toSorted(
         (firstComment, secondComment) =>
           secondComment.date.valueOf() - firstComment.date.valueOf()
       )

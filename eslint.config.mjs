@@ -3,6 +3,7 @@ import prettierConfig from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
 import promisePlugin from 'eslint-plugin-promise';
 import sonarPlugin from 'eslint-plugin-sonarjs';
+// eslint-disable-next-line import/default, import/namespace, import/no-named-as-default, import/no-named-as-default-member
 import unicornplugin from 'eslint-plugin-unicorn';
 import globals from 'globals';
 
