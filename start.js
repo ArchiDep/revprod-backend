@@ -5,7 +5,7 @@ import { openDatabase } from './db.js';
 import { startServer } from './server.js';
 
 export default async function start() {
-  const config = await loadConfig();
+  const config = loadConfig();
   await loadSchemas(config);
   const database = await openDatabase(config);
   const app = createApplication(config, database);

@@ -19,7 +19,7 @@ and [reverse proxying](https://en.wikipedia.org/wiki/Reverse_proxy).
 
 ## Requirements
 
-- [Node.js][node] 24.x
+- [Node.js][node] 26.x
 
 ## Development
 
@@ -31,8 +31,25 @@ cd revprod-backend
 # Install dependencies
 npm ci
 
-# Run the application in development mode
+# Run the application in development mode, restarting it when its code or
+# .env changes
 npm run dev
+```
+
+The [`Makefile`](Makefile) installs the dependencies each target needs:
+
+```bash
+# Run every check: table of contents, formatting, linting, tests
+make
+
+# Run the automated tests
+make test
+
+# Format the code with Prettier
+make format
+
+# Update the table of contents of this README
+make doctoc
 ```
 
 ## Production

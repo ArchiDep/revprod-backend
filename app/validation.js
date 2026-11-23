@@ -1,7 +1,6 @@
 import Ajv from 'ajv';
 import ajvErrors from 'ajv-errors';
-import glob from 'fast-glob';
-import { readFile } from 'node:fs/promises';
+import { glob, readFile } from 'node:fs/promises';
 import { basename, join as joinPath } from 'node:path';
 
 import { root } from '../config.js';
@@ -27,17 +26,13 @@ export async function loadSchemas(config) {
 
 export function getValidationErrors(data, schemaName) {
   const validate = getSchema(schemaName);
-  if (!validate(data)) {
-    return validate.errors;
-  }
-
-  return undefined;
+  return validate(data) ? undefined : validate.errors;
 }
 
 async function findSchemas(logger) {
-  const appSchemaFiles = await glob('app/**/*.schema.json', {
-    cwd: root
-  });
+  const appSchemaFiles = await Array.fromAsync(
+    glob('app/**/*.schema.json', { cwd: root })
+  );
 
   logger.trace(
     `Found ${appSchemaFiles.length} JSON schema(s) in application directory`

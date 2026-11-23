@@ -1,5 +1,3 @@
-import { route } from '../express.js';
-
-export const homePage = route((req, res) => {
+export function homePage(req, res) {
   res.redirect('/share');
-});
+}

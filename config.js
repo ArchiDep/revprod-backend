@@ -1,4 +1,3 @@
-import { identity, isInteger } from 'lodash-es';
 import log4js from 'log4js';
 import { dirname, resolve as resolvePath } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -8,9 +7,7 @@ const logLevels = ['FATAL', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'TRACE'];
 export const root = dirname(fileURLToPath(import.meta.url));
 
 // eslint-disable-next-line max-lines-per-function
-export async function loadConfig() {
-  await loadDotenv();
-
+export function loadConfig() {
   const environment = process.env.NODE_ENV ?? 'development';
 
   const dbFile = resolvePath(
@@ -79,22 +76,9 @@ export async function loadConfig() {
   };
 }
 
-async function loadDotenv() {
-  let dotenv;
-  try {
-    dotenv = await import('dotenv');
-  } catch {
-    // Ignore
-  }
-
-  if (dotenv) {
-    dotenv.config();
-  }
-}
-
-function getEnvironmentString(variableName, required = true) {
+function getEnvironmentString(variableName, isRequired = true) {
   const value = process.env[variableName];
-  if (required && value === undefined) {
+  if (isRequired && value === undefined) {
     throw new Error(`$${variableName} is required`);
   }
 
@@ -120,7 +104,7 @@ function parseEnvironmentEnum(
   variableName,
   allowedValues,
   defaultValue,
-  coerce = identity
+  coerce = value => value
 ) {
   const value = getEnvironmentString(variableName, defaultValue === undefined);
   if (value === undefined) {
@@ -145,9 +129,9 @@ function parseEnvironmentInt(variableName, defaultValue, min, max) {
     return defaultValue;
   }
 
-  const parsed = Number.parseInt(value, 10);
+  const parsed = Number(value);
   if (
-    !isInteger(parsed) ||
+    !Number.isSafeInteger(parsed) ||
     (min !== undefined && value < min) ||
     (max !== undefined && value > max)
   ) {
@@ -165,11 +149,11 @@ function parseEnvironmentPort(variableName, defaultValue) {
   return parseEnvironmentInt(variableName, defaultValue, 1, 65_535);
 }
 
-function parseEnvironmentString(variableName, defaultValue, coerce = identity) {
+function parseEnvironmentString(
+  variableName,
+  defaultValue,
+  coerce = value => value
+) {
   const value = getEnvironmentString(variableName, defaultValue === undefined);
-  if (value === undefined) {
-    return defaultValue;
-  }
-
-  return coerce(value);
+  return value === undefined ? defaultValue : coerce(value);
 }

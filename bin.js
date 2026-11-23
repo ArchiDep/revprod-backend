@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import chalk from 'chalk';
+import { styleText } from 'node:util';
 
 import start from './start.js';
 
@@ -7,6 +7,6 @@ try {
   await start();
 } catch (err) {
   // eslint-disable-next-line no-console
-  console.error(chalk.red(err.stack));
+  console.error(styleText('red', err.stack, { stream: process.stderr }));
   process.exit(1);
 }

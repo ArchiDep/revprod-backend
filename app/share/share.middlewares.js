@@ -1,14 +1,13 @@
 import { createComment, getComments } from '../../db.js';
-import { route } from '../express.js';
 import { getValidationErrors } from '../validation.js';
 
-export const sharePage = route((req, res) => {
+export function sharePage(req, res) {
   res.render('share/share', {
     pageTitle: 'Share your experience'
   });
-});
+}
 
-export const share = route(async (req, res) => {
+export async function share(req, res) {
   const errors = getValidationErrors(req.body, 'comment');
   if (errors) {
     res.redirect('/');
@@ -25,9 +24,9 @@ export const share = route(async (req, res) => {
     pageTitle: 'Thank you!',
     shared: true
   });
-});
+}
 
-export const listComments = route(async (req, res) => {
+export async function listComments(req, res) {
   const comments = await getComments();
 
   res.send(
@@ -38,7 +37,7 @@ export const listComments = route(async (req, res) => {
       )
       .map(comment => commentToJson(comment))
   );
-});
+}
 
 function commentToJson({ name, text, date }) {
   return {

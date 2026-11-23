@@ -4,14 +4,14 @@ import { readFile, writeFile } from 'node:fs/promises';
 const maxComments = 5;
 
 let dbPromise;
-let dbOpen = false;
+let isDatabaseOpen = false;
 
 export async function openDatabase({ dbFile }) {
-  if (dbOpen) {
+  if (isDatabaseOpen) {
     throw new Error('Database is already open');
   }
 
-  dbOpen = true;
+  isDatabaseOpen = true;
 
   try {
     const dbContents = await readFile(dbFile, 'utf8');
@@ -28,6 +28,11 @@ export async function openDatabase({ dbFile }) {
 
     throw err;
   }
+}
+
+export function closeDatabase() {
+  dbPromise = undefined;
+  isDatabaseOpen = false;
 }
 
 function createBlankDatabase() {
