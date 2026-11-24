@@ -33,8 +33,9 @@ export function startServer(config, app) {
     }
 
     function onServerListening() {
-      logger.info(`Listening on ${config.host}:${config.port}`);
+      // A signal sent once the message below is seen must find the handlers.
       stopOnSignal(server, logger);
+      logger.info(`Listening on ${config.host}:${config.port}`);
       resolve();
     }
   });
