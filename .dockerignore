@@ -1,0 +1,9 @@
+# https://docs.docker.com/build/concepts/context/#dockerignore-files
+# The build reads the application, its tests and its locked dependencies only.
+*
+!package.json
+!package-lock.json
+!app/
+!public/
+!tests/
+!*.js
