@@ -21,8 +21,8 @@ export function createApplication(config, db) {
   app.set('views', joinPath(root, 'app'));
   app.set('view engine', 'pug');
 
-  // Log requests.
-  app.use(log4js.connectLogger(logger, { level: 'DEBUG' }));
+  // Log requests, except health checks, which would fill the logs.
+  app.use(log4js.connectLogger(logger, { level: 'DEBUG', nolog: '^/health$' }));
 
   // Parse form data.
   app.use(express.urlencoded({ extended: false }));
