@@ -28,16 +28,9 @@ RUN npm test && \
 # =======
 FROM node:26.13.0-trixie-slim
 
-# Node.js does not stop on SIGTERM when it is the container's first process,
-# whose signals have no default action: Docker would wait, then kill it. tini
-# runs as that first process instead and forwards the signal to Node.js.
-#
 # The data directory is the only one the application writes to: mount a volume
 # there to keep the comments when the container is replaced.
-RUN apt-get update && \
-    apt-get install --yes --no-install-recommends tini && \
-    rm -rf /var/lib/apt/lists/* && \
-    useradd --system --no-create-home --shell /usr/sbin/nologin revprod && \
+RUN useradd --system --no-create-home --shell /usr/sbin/nologin revprod && \
     mkdir -p /revprod-backend/data && \
     chown revprod:revprod /revprod-backend/data
 
@@ -58,7 +51,6 @@ EXPOSE 3000
 HEALTHCHECK --interval=15s --timeout=5s --start-period=10s --retries=3 \
   CMD ["node", "-e", "fetch(`http://127.0.0.1:${process.env.REVPROD_LISTEN_PORT ?? 3000}/health`).then(res => process.exit(res.ok ? 0 : 1), () => process.exit(1))"]
 
-# Node.js is run directly rather than through npm, which would add a process
-# between tini and the application.
-ENTRYPOINT ["tini", "--"]
+# Node.js is run directly rather than through npm, so that Docker's SIGTERM
+# reaches the application, which stops on it by itself.
 CMD ["node", "bin.js"]
